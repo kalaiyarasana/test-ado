@@ -1,7 +1,7 @@
 trigger:
   - main
 pool:
-  name: Default
+  name: Azure Pipelines
 parameters:
   - name: deploymentType
     displayName: 'Select Deployment Type'
