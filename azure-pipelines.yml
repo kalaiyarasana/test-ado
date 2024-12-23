@@ -1,7 +1,7 @@
 trigger:
   - main
 pool:
-  name: Azure Pipelines
+  name: Hosted Agent
 parameters:
   - name: deploymentType
     displayName: 'Select Deployment Type'
