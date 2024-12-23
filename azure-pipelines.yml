@@ -1,8 +1,20 @@
 trigger:
   - main
+parameters:
+  - name: deploymentType
+    displayName: 'Select Deployment Type'
+    type: string
+    default: 'staging'
+    values:
+      - staging
+      - production
+      - testing
 
-pool:
-  vmImage: 'ubuntu-latest'
-
-steps:
-  - script: echo "Hello, Azure DevOps!"
+stages:
+- stage: Deploy
+  jobs:
+  - job: DeployJob
+    steps:
+    - script: |
+        echo "Deployment type selected: ${{ parameters.deploymentType }}"
+      displayName: 'Run Deployment'
