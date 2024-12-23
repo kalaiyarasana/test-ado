@@ -1,7 +1,6 @@
 trigger:
   - main
-pool:
-  name: Azure Pipelines
+
 parameters:
   - name: deploymentType
     displayName: 'Select Deployment Type'
@@ -11,11 +10,21 @@ parameters:
       - staging
       - production
       - testing
+
 stages:
-- stage: Deploy
+- stage: Validate
+  displayName: "Validate Pipeline Configuration"
   jobs:
-  - job: DeployJob
+  - job: ValidateJob
+    displayName: "Validation Job"
     steps:
     - script: |
-        echo "Deployment type selected: ${{ parameters.deploymentType }}"
-      displayName: 'Run Deployment'
+        echo "Validating deployment type..."
+        if [[ "${{ parameters.deploymentType }}" == "staging" || "${{ parameters.deploymentType }}" == "production" || "${{ parameters.deploymentType }}" == "testing" ]]; then
+          echo "Deployment type '${{ parameters.deploymentType }}' is valid."
+        else
+          echo "Invalid deployment type: '${{ parameters.deploymentType }}'"
+          exit 1
+        fi
+      displayName: "Validate Deployment Type"
+
